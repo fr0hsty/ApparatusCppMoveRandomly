@@ -146,7 +146,6 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 	}
 
 	// Lets also create a utility mechanic that draws our destinations
-	// Idealy, you would comment this out for your production build.
 	// MECHANIC - Draws the DESTINATION of all subjects with destinations.
 	{
 		// 1. Make a filter of only finished moving subjects
