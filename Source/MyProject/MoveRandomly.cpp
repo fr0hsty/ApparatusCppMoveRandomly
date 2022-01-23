@@ -51,7 +51,7 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 	// Opening brackets like this isnt nessicary but it can be nice for formatting many side by side mechanics.
-	// MECHANIC - Find everyone who has finished moving, and update their desired location
+	// MECHANIC - Get all subjects with a Position and destination, and move them toward the destination. Flag them as finished if within some threhshold.
 	{
 		// 1. Declare our filter.
 		// All subjects in the game world that currently contain a position and a destination will be caught with this filter
@@ -118,7 +118,7 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 	}
 
 	// Lets get a new destination for anyone who has finished their move.
-	// MECHANIC - Handles all subjects who have finished their last move.
+	// MECHANIC - Get all Subjects who have finished moving, update their desired location, then remove their "Finished Moving" trait.
 	{
 		// 1. Make a filter of subjects who have finished moving
 		FFilter Filter = FFilter::Make<FFinishedMoving>();
