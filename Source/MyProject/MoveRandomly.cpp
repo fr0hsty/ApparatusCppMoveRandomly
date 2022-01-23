@@ -15,6 +15,7 @@ void AMoveRandomly::BeginPlay()
 	for (int i = 0; i < NumSubjects; i++)
 	{
 		// Create a new subject and save a refrence to its handle
+		// An FSubjectHandle is the main way you're going to interface with Apparatus when adding/removing data from a subject
 		FSubjectHandle NewSubject = SpawnSubject();
 
 		// Create a new position trait for this subject
