@@ -78,8 +78,8 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 		{
 			// For this example, we want all Positions to move toward Destination at a given rate.
 			// If they are near the destination, we want to add a trait signalling that their pathing is finished ...
-			// So that some other system may pick up / handle this subject
-			// NOTE - You dont need to break things up into extra systems, but I encourage you to condier structuring code that way.
+			// ... So that some other system may pick up / handle this subject
+			// NOTE - You dont need to break things up like this into extra systems, but I encourage you to condier structuring code that way.
 
 			// Get distance from our destination
 			float DistFromDestination = FVector::Dist(CurrentPos.Value, Destination.Value);
@@ -96,22 +96,25 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 				// Scale the direction by movespeed and delta seconds.
 				// In addition, you could consider storing your subjects MoveSpeed in another trait, accessing it via ...
 				// ... this filter, and setting your speed that way.
-				MoveVector *= DeltaSeconds * MoveSpeed;
+				MoveVector *= DeltaSeconds * MoveSpeed; // MoveSpeed decalred in .h file.
 
 				// Lets update the position trait
-				FSubjectPosition UpdatedPos;
+				FSubjectPosition UpdatedPos; // Create a new Position trait
 				UpdatedPos.Value = CurrentPos.Value + MoveVector; // Add the move vector onto our existing position
-				CurrentSubject.SetTrait(UpdatedPos);
+				CurrentSubject.SetTrait(UpdatedPos); // Set the current position trait (or add new if none exists) to our new position trait
 			}
 
-			// We're close enough to have finished our move.
+			// We're already close enough to have finished our move.
 			else
 			{
 				// Create our finished moving struct...
 				FFinishedMoving FinishedMove;
+
+				// NOTE, that this Struct doesn't actually contain any data. We're just using it as an on/off trait to find Subjects.
+				// In this way, we can use Filter.Include, and Filter.Exclude to construct Mechanics that operate over specifically flagged subjects
 				
-				// Add it to our trait
-				// NOTE - Calling "Set Trait" also functions to ADD a given trait OR to override the value of the trait already there
+				// Add the new trait to our subject
+				// NOTE - Calling "Set Trait" will either ADD a given trait or OVERRIDE a given trait if it already exists
 				CurrentSubject.SetTrait(FinishedMove);
 			}
 		});
@@ -143,7 +146,8 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 	}
 
 	// Lets also create a utility mechanic that draws our destinations
-	// MECHANIC - Draws positions of all subjects with positions.
+	// Idealy, you would comment this out for your production build.
+	// MECHANIC - Draws the DESTINATION of all subjects with destinations.
 	{
 		// 1. Make a filter of only finished moving subjects
 		FFilter Filter = FFilter::Make<FDestination>();
@@ -152,16 +156,16 @@ void AMoveRandomly::Tick(float DeltaSeconds)
 		FChain* Chain = Enchain(Filter);
 
 		// 3. Operate!
-		Chain->Operate([&](FSubjectHandle CurrentSubject, FDestination Destination)
+		Chain->Operate([&](FSubjectHandle CurrentSubject, FDestination CurrentDestination)
 		{
 			// Unreal command to draw our positions.
-			DrawDebugPoint(GetWorld(), Destination.Value,  20.0f, FColor::Red, false, 0.25f);
+			DrawDebugPoint(GetWorld(), CurrentDestination.Value,  20.0f, FColor::Red, false, 0.25f);
 		});
 	}
 
 	
 	// Lastly, lets write a simple system to debug draw our subject positions so we can see what is going on.
-	// MECHANIC - Draws positions of all subjects with positions.
+	// MECHANIC - Draws the POSITION of all subjects with positions.
 	{
 		// 1. Make a filter of only finished moving subjects
 		FFilter Filter = FFilter::Make<FSubjectPosition>();
