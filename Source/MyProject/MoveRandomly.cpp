@@ -43,7 +43,9 @@ void AMoveRandomly::BeginPlay()
 }
 
 // The following example represents the most core and basic way of using apparatus.
-// You require a FFilter, an FChain, and to call Chain->Operate lambda function to apply logic to subjects found with your filter.
+// You Firstly create 1. A FFilter, then 2. An FChain, and then call a 3. Chain->Operate Lambda function to apply logic to subjects found with your filter. 
+// This is the basic pattern you're going to repeat over and over while using Apparatus.
+// It is also worth noting that not all of these Mechanics need to be kept to the same tick function, or even the same file! You can distribute and structure these as you like.
 void AMoveRandomly::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
