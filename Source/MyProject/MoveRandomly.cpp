@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "MoveRandomly.h"
 #include "MainStructs.h"
 #include "DrawDebugHelpers.h" // ue4 code to debug draw stuff
@@ -9,6 +8,7 @@
 // Lets do some simple setup to spawn 10 random subjects
 void AMoveRandomly::BeginPlay()
 {
+	// We need to make sure to call the Parents Super, otherwise Unreal gets angry and can create undefined behaviors.
 	Super::BeginPlay();
 
 	// We need to spawn some subjects initially to perform the logic on
