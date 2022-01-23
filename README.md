@@ -9,6 +9,8 @@ This repo contains BOTH c++ and BP examples to acheive the same logic, but in ea
 5. Open bpExample MAP
 6. Play!
 
+----
+
 This github results in the following randomly moving subjects built in c++ OR BP with Apparatus:
 
 https://user-images.githubusercontent.com/17767740/150680813-76f8fd94-01d0-447a-af68-44051b5119a3.mov
