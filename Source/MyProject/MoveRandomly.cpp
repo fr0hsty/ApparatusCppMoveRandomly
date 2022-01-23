@@ -19,11 +19,15 @@ void AMoveRandomly::BeginPlay()
 		FSubjectHandle NewSubject = SpawnSubject();
 
 		// Create a new position trait for this subject
+		// This is a custom made NON Apparatus struct that you will have to create for your own project
+		// It is defined in MainStructs.h
 		FSubjectPosition NewPosition;
+
 		// Set its X/Y randomly
 		NewPosition.Value = FVector(FMath::RandRange(-RandomWidth,RandomWidth), FMath::RandRange(-RandomWidth,RandomWidth), 0);
 
 		// In addition, lets give our subject a destination so that it can randomly walk around
+		// Much like our Position struct, this is another custom struct ...
 		FDestination NewDestination;
 		NewDestination.Value = FVector(FMath::RandRange(-RandomWidth,RandomWidth), FMath::RandRange(-RandomWidth,RandomWidth), 0);
 		
